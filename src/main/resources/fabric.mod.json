@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "craftandfind",
+  "version": "${version}",
+  "name": "Craft & Find",
+  "description": "A vanilla-style storage workbench that crafts from nearby containers and helps find stored items.",
+  "authors": ["overyourhead"],
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.overyourhead.craftandfind.CraftAndFindMod"
+    ],
+    "client": [
+      "com.overyourhead.craftandfind.client.CraftAndFindClient"
+    ]
+  },
+  "mixins": [
+    "craftandfind.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

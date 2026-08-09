@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "LCL",
+    "HTH",
+    "LBL"
+  ],
+  "key": {
+    "L": {
+      "item": "minecraft:dark_oak_wood"
+    },
+    "C": {
+      "item": "minecraft:compass"
+    },
+    "H": {
+      "item": "minecraft:chest"
+    },
+    "T": {
+      "item": "minecraft:crafting_table"
+    },
+    "B": {
+      "item": "minecraft:writable_book"
+    }
+  },
+  "result": {
+    "id": "craftandfind:storage_workbench",
+    "count": 1
+  }
+}

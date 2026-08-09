@@ -1,0 +1,43 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "part": "lower_main"
+      },
+      "apply": {
+        "model": "craftandfind:block/storage_workbench"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "part": "lower_main"
+      },
+      "apply": {
+        "model": "craftandfind:block/storage_workbench",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "part": "lower_main"
+      },
+      "apply": {
+        "model": "craftandfind:block/storage_workbench",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "part": "lower_main"
+      },
+      "apply": {
+        "model": "craftandfind:block/storage_workbench",
+        "y": 270
+      }
+    }
+  ]
+}
