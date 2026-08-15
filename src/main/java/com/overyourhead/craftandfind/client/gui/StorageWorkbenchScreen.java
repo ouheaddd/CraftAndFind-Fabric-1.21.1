@@ -244,6 +244,15 @@ public final class StorageWorkbenchScreen extends CraftingScreen {
             return;
         }
 
+        // Server-side recipe switching normally clears the real 3x3 grid before
+        // this packet arrives. If a full inventory/storage prevented that, never
+        // draw a ghost on top of real items: keep the persistent grid readable.
+        for (int slotIndex = 1; slotIndex <= 9; slotIndex++) {
+            if (!menu.getSlot(slotIndex).getItem().isEmpty()) {
+                return;
+            }
+        }
+
         minecraft.level.getRecipeManager().byKey(recipeId).ifPresent(recipe ->
                 getRecipeBookComponent().setupGhostRecipe(recipe, menu.slots)
         );

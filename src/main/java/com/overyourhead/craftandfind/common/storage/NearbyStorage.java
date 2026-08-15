@@ -2,6 +2,7 @@ package com.overyourhead.craftandfind.common.storage;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -19,9 +20,12 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A cached view of loaded storage positions inside the workbench radius.
@@ -116,6 +120,25 @@ public final class NearbyStorage {
                 contents.accountStack(stack, stack.getCount());
             }
         }
+    }
+
+    /**
+     * Returns as much of a crafting-grid stack as possible to nearby storage.
+     * The returned stack is the remainder that no storage accepted.
+     */
+    public ItemStack insert(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+
+        ItemStack remaining = stack.copy();
+        for (ResolvedStorage resolved : currentStorages()) {
+            remaining = resolved.storage().insert(remaining, false);
+            if (remaining.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+        }
+        return remaining;
     }
 
     /**
@@ -276,49 +299,68 @@ public final class NearbyStorage {
      * without waiting for the next radius scan.
      */
     private List<SlotReference> currentSlots() {
-        if (level == null || storages.isEmpty()) {
-            return List.of();
-        }
-
         List<SlotReference> result = new ArrayList<>();
-        for (StorageReference reference : storages) {
-            Storage<ItemVariant> storage = reference.currentStorage(level);
-            if (storage == null) {
-                continue;
-            }
-
-            for (StorageView<ItemVariant> view : storage.nonEmptyViews()) {
-                ItemStack stack = stackFromView(view);
-                if (!stack.isEmpty()) {
-                    result.add(new SlotReference(
-                            reference.pos(),
-                            view,
-                            reference.distanceSquared()
-                    ));
-                }
-            }
+        for (ResolvedStorage resolved : currentStorages()) {
+            resolved.storage().collectSlots(
+                    resolved.pos(),
+                    resolved.distanceSquared(),
+                    result
+            );
         }
         return result;
     }
 
     /**
-     * Resolves a block storage through Fabric Transfer API. The lookup already
-     * provides vanilla Container / WorldlyContainer fallbacks, while mods can
-     * expose custom Storage<ItemVariant> implementations without Craft & Find
-     * depending on them directly.
+     * Resolves cached storage positions and removes duplicate logical inventories.
+     * Multi-block/network storages may expose the exact same Transfer API storage
+     * from several block positions; those positions must count only once.
      */
-    private static Storage<ItemVariant> resolveStorage(Level level, BlockPos pos) {
+    private List<ResolvedStorage> currentStorages() {
+        if (level == null || storages.isEmpty()) {
+            return List.of();
+        }
+
+        Set<Object> seen = Collections.newSetFromMap(new IdentityHashMap<>());
+        List<ResolvedStorage> result = new ArrayList<>();
+        for (StorageReference reference : storages) {
+            StorageAccess storage = reference.currentStorage(level);
+            if (storage == null || !seen.add(storage.identity())) {
+                continue;
+            }
+            result.add(new ResolvedStorage(reference.pos(), storage, reference.distanceSquared()));
+        }
+
+        result.sort(Comparator
+                .comparingInt(ResolvedStorage::distanceSquared)
+                .thenComparingLong(value -> value.pos().asLong()));
+        return result;
+    }
+
+    /**
+     * Vanilla and vanilla-style containers are read directly. This is important
+     * for double chests: Fabric's Transfer API may expose the full logical chest
+     * from both block positions, which otherwise doubles the visible count.
+     * Non-Container modded storages keep using the generic Transfer API fallback.
+     */
+    private static StorageAccess resolveStorage(Level level, BlockPos pos) {
         if (!level.hasChunkAt(pos)) {
             return null;
         }
 
-        // Keep the radius scan focused on actual inventory block entities. This
-        // avoids treating capability-like utility blocks as nearby chests.
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity == null) {
             return null;
         }
 
+        if (blockEntity instanceof Container container) {
+            return new ContainerStorageAccess(container);
+        }
+
+        Storage<ItemVariant> transferStorage = findTransferStorage(level, pos);
+        return transferStorage != null ? new TransferStorageAccess(transferStorage) : null;
+    }
+
+    private static Storage<ItemVariant> findTransferStorage(Level level, BlockPos pos) {
         Storage<ItemVariant> unsided = ItemStorage.SIDED.find(level, pos, null);
         if (unsided != null) {
             return unsided;
@@ -400,18 +442,168 @@ public final class NearbyStorage {
         }
     }
 
-    private record StorageReference(BlockPos pos, int distanceSquared) {
-        Storage<ItemVariant> currentStorage(Level level) {
-            return resolveStorage(level, pos);
+    private interface StorageAccess {
+        Object identity();
+
+        void collectSlots(BlockPos pos, int distanceSquared, List<SlotReference> output);
+
+        ItemStack insert(ItemStack stack, boolean simulate);
+    }
+
+    private record ContainerStorageAccess(Container container) implements StorageAccess {
+        @Override
+        public Object identity() {
+            return container;
+        }
+
+        @Override
+        public void collectSlots(BlockPos pos, int distanceSquared, List<SlotReference> output) {
+            for (int slot = 0; slot < container.getContainerSize(); slot++) {
+                if (!container.getItem(slot).isEmpty()) {
+                    output.add(new SlotReference(
+                            pos,
+                            new ContainerSlotAccess(container, slot),
+                            distanceSquared
+                    ));
+                }
+            }
+        }
+
+        @Override
+        public ItemStack insert(ItemStack stack, boolean simulate) {
+            if (stack.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+
+            ItemStack remaining = stack.copy();
+            boolean changed = false;
+            for (int pass = 0; pass < 2 && !remaining.isEmpty(); pass++) {
+                for (int slot = 0; slot < container.getContainerSize() && !remaining.isEmpty(); slot++) {
+                    ItemStack existing = container.getItem(slot);
+                    boolean matching = !existing.isEmpty()
+                            && ItemStack.isSameItemSameComponents(existing, remaining);
+                    if ((pass == 0 && !matching) || (pass == 1 && !existing.isEmpty())) {
+                        continue;
+                    }
+                    if (!container.canPlaceItem(slot, remaining)) {
+                        continue;
+                    }
+
+                    int limit = Math.min(container.getMaxStackSize(), remaining.getMaxStackSize());
+                    int room = existing.isEmpty() ? limit : limit - existing.getCount();
+                    if (room <= 0) {
+                        continue;
+                    }
+
+                    int moved = Math.min(room, remaining.getCount());
+                    if (!simulate) {
+                        if (existing.isEmpty()) {
+                            container.setItem(slot, remaining.copyWithCount(moved));
+                        } else {
+                            existing.grow(moved);
+                        }
+                        changed = true;
+                    }
+                    remaining.shrink(moved);
+                }
+            }
+
+            if (changed) {
+                container.setChanged();
+            }
+            return remaining;
         }
     }
 
-    private record SlotReference(BlockPos pos, StorageView<ItemVariant> view, int distanceSquared) {
-        ItemStack currentStack() {
+    private record TransferStorageAccess(Storage<ItemVariant> storage) implements StorageAccess {
+        @Override
+        public Object identity() {
+            return storage;
+        }
+
+        @Override
+        public void collectSlots(BlockPos pos, int distanceSquared, List<SlotReference> output) {
+            for (StorageView<ItemVariant> view : storage.nonEmptyViews()) {
+                ItemStack stack = stackFromView(view);
+                if (!stack.isEmpty()) {
+                    output.add(new SlotReference(
+                            pos,
+                            new TransferSlotAccess(view),
+                            distanceSquared
+                    ));
+                }
+            }
+        }
+
+        @Override
+        public ItemStack insert(ItemStack stack, boolean simulate) {
+            if (stack.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+
+            ItemVariant resource = ItemVariant.of(stack);
+            try (Transaction transaction = Transaction.openOuter()) {
+                long inserted = storage.insert(resource, stack.getCount(), transaction);
+                if (inserted <= 0L) {
+                    return stack.copy();
+                }
+
+                if (!simulate) {
+                    transaction.commit();
+                }
+
+                int insertedCount = (int) Math.min(inserted, stack.getCount());
+                int remainingCount = stack.getCount() - insertedCount;
+                return remainingCount <= 0
+                        ? ItemStack.EMPTY
+                        : stack.copyWithCount(remainingCount);
+            }
+        }
+    }
+
+    private interface SlotAccess {
+        ItemStack currentStack();
+
+        ItemStack extract(int amount, boolean simulate);
+    }
+
+    private record ContainerSlotAccess(Container container, int slot) implements SlotAccess {
+        @Override
+        public ItemStack currentStack() {
+            return container.getItem(slot);
+        }
+
+        @Override
+        public ItemStack extract(int amount, boolean simulate) {
+            if (amount <= 0) {
+                return ItemStack.EMPTY;
+            }
+
+            ItemStack stack = container.getItem(slot);
+            if (stack.isEmpty()) {
+                return ItemStack.EMPTY;
+            }
+
+            if (simulate) {
+                return stack.copyWithCount(Math.min(amount, stack.getCount()));
+            }
+
+            ItemStack extracted = container.removeItem(slot, amount);
+            if (!extracted.isEmpty()) {
+                container.setChanged();
+            }
+            return extracted;
+        }
+    }
+
+    private record TransferSlotAccess(StorageView<ItemVariant> view) implements SlotAccess {
+        @Override
+        public ItemStack currentStack() {
             return stackFromView(view);
         }
 
-        ItemStack extract(int amount, boolean simulate) {
+        @Override
+        public ItemStack extract(int amount, boolean simulate) {
             if (amount <= 0 || view.isResourceBlank() || view.getAmount() <= 0L) {
                 return ItemStack.EMPTY;
             }
@@ -430,6 +622,25 @@ public final class NearbyStorage {
                 int count = (int) Math.min(extracted, Integer.MAX_VALUE);
                 return resource.toStack(count);
             }
+        }
+    }
+
+    private record StorageReference(BlockPos pos, int distanceSquared) {
+        StorageAccess currentStorage(Level level) {
+            return resolveStorage(level, pos);
+        }
+    }
+
+    private record ResolvedStorage(BlockPos pos, StorageAccess storage, int distanceSquared) {
+    }
+
+    private record SlotReference(BlockPos pos, SlotAccess access, int distanceSquared) {
+        ItemStack currentStack() {
+            return access.currentStack();
+        }
+
+        ItemStack extract(int amount, boolean simulate) {
+            return access.extract(amount, simulate);
         }
     }
 
