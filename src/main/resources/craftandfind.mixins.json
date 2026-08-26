@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "client.CraftingMenuMixin",
+    "client.RecipeBookComponentAccessor",
     "client.RecipeBookComponentTextureMixin",
     "client.RecipeBookSearchStyleMixin",
     "client.RecipeButtonTextureMixin",

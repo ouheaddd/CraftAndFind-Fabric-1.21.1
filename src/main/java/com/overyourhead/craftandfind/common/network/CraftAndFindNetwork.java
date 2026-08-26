@@ -4,11 +4,13 @@ import com.overyourhead.craftandfind.common.menu.StorageWorkbenchMenu;
 import com.overyourhead.craftandfind.common.network.payload.GhostRecipePayload;
 import com.overyourhead.craftandfind.common.network.payload.HighlightPositionsPayload;
 import com.overyourhead.craftandfind.common.network.payload.HighlightRequestPayload;
+import com.overyourhead.craftandfind.common.network.payload.RecipeTransferPayload;
 import com.overyourhead.craftandfind.common.network.payload.StorageSnapshotPayload;
 import com.overyourhead.craftandfind.config.CraftAndFindServerConfig;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 
 public final class CraftAndFindNetwork {
     private CraftAndFindNetwork() {
@@ -18,6 +20,10 @@ public final class CraftAndFindNetwork {
         PayloadTypeRegistry.playC2S().register(
                 HighlightRequestPayload.TYPE,
                 HighlightRequestPayload.STREAM_CODEC
+        );
+        PayloadTypeRegistry.playC2S().register(
+                RecipeTransferPayload.TYPE,
+                RecipeTransferPayload.STREAM_CODEC
         );
         PayloadTypeRegistry.playS2C().register(
                 StorageSnapshotPayload.TYPE,
@@ -35,6 +41,10 @@ public final class CraftAndFindNetwork {
         ServerPlayNetworking.registerGlobalReceiver(
                 HighlightRequestPayload.TYPE,
                 CraftAndFindNetwork::handleHighlightRequest
+        );
+        ServerPlayNetworking.registerGlobalReceiver(
+                RecipeTransferPayload.TYPE,
+                CraftAndFindNetwork::handleRecipeTransfer
         );
     }
 
@@ -61,5 +71,24 @@ public final class CraftAndFindNetwork {
                 player,
                 new HighlightPositionsPayload(payload.stack(), visibleTargets)
         );
+    }
+
+    private static void handleRecipeTransfer(
+            RecipeTransferPayload payload,
+            ServerPlayNetworking.Context context
+    ) {
+        ServerPlayer player = context.player();
+        if (!(player.containerMenu instanceof StorageWorkbenchMenu menu)) {
+            return;
+        }
+        if (menu.containerId != payload.containerId()) {
+            return;
+        }
+
+        player.serverLevel()
+                .getRecipeManager()
+                .byKey(payload.recipeId())
+                .filter(holder -> holder.value() instanceof CraftingRecipe)
+                .ifPresent(holder -> menu.handlePlacement(payload.placeAll(), holder, player));
     }
 }
