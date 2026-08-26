@@ -1,6 +1,7 @@
 package com.overyourhead.craftandfind.compat.emi;
 
 import com.overyourhead.craftandfind.client.ClientStorageState;
+import com.overyourhead.craftandfind.common.network.payload.RecipeTransferPayload;
 import com.overyourhead.craftandfind.common.storage.StorageItemEntry;
 import dev.emi.emi.api.recipe.EmiPlayerInventory;
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -14,6 +15,7 @@ import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,14 +106,14 @@ public final class StorageWorkbenchEmiRecipeHandler implements StandardRecipeHan
             return StandardRecipeHandler.super.craft(recipe, context);
         }
 
-        // Return to the handled screen, then send the normal recipe-book packet.
-        // StorageWorkbenchMenu handles it and pulls from NearbyStorage server-side.
+        // Return to the workbench and use the exact same storage-aware placement
+        // path as Craft & Find's own recipe panel and the JEI transfer button.
         minecraft.setScreen(context.getScreen());
-        minecraft.gameMode.handlePlaceRecipe(
+        ClientPlayNetworking.send(new RecipeTransferPayload(
                 menu.containerId,
-                vanillaRecipe,
+                recipe.getId(),
                 context.getAmount() > 1
-        );
+        ));
         return true;
     }
 }

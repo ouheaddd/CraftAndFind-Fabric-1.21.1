@@ -8,5 +8,8 @@
   "gui.craftandfind.sort_quantity": "Sort by quantity",
   "gui.craftandfind.sort_alphabetical": "Sort alphabetically",
   "advancements.craftandfind.a_better_workbench.title": "A Better Workbench",
-  "advancements.craftandfind.a_better_workbench.description": "Upgrade the crafting table into something greater."
+  "advancements.craftandfind.a_better_workbench.description": "Upgrade the crafting table into something greater.",
+  "gui.craftandfind.no_recipes": "No matching recipes",
+  "gui.craftandfind.show_craftable_recipes": "Show craftable recipes",
+  "gui.craftandfind.show_all_recipes": "Show all recipes"
 }

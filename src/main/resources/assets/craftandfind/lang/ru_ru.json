@@ -8,5 +8,8 @@
   "gui.craftandfind.sort_quantity": "Сортировать по количеству",
   "gui.craftandfind.sort_alphabetical": "Сортировать по алфавиту",
   "advancements.craftandfind.a_better_workbench.title": "Верстак получше",
-  "advancements.craftandfind.a_better_workbench.description": "Превратите обычный верстак во что-то большее."
+  "advancements.craftandfind.a_better_workbench.description": "Превратите обычный верстак во что-то большее.",
+  "gui.craftandfind.no_recipes": "Нет подходящих рецептов",
+  "gui.craftandfind.show_craftable_recipes": "Показать доступные рецепты",
+  "gui.craftandfind.show_all_recipes": "Показать все рецепты"
 }

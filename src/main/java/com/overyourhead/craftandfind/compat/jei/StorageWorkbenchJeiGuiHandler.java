@@ -13,10 +13,13 @@ import java.util.Optional;
 public final class StorageWorkbenchJeiGuiHandler implements IGuiContainerHandler<StorageWorkbenchScreen> {
     @Override
     public List<Rect2i> getGuiExtraAreas(StorageWorkbenchScreen screen) {
-        if (!screen.isStoragePanelOpen()) {
-            return List.of();
+        if (screen.isStoragePanelOpen()) {
+            return List.of(screen.storagePanelArea());
         }
-        return List.of(screen.storagePanelArea());
+        if (screen.isRecipePanelOpen()) {
+            return List.of(screen.recipePanelArea());
+        }
+        return List.of();
     }
 
     @Override
@@ -26,6 +29,9 @@ public final class StorageWorkbenchJeiGuiHandler implements IGuiContainerHandler
             double mouseX,
             double mouseY
     ) {
+        // Storage items remain normal JEI lookup targets. Recipe-result tiles
+        // are deliberately excluded here so JEI never steals their left click;
+        // keyboard R/U for those tiles is handled through RecipeViewerHooks.
         ItemStack stack = screen.storageItemUnderMouse(mouseX, mouseY);
         if (stack.isEmpty()) {
             return Optional.empty();

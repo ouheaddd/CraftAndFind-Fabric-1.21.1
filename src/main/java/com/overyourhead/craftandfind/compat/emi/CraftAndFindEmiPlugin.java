@@ -19,11 +19,14 @@ public final class CraftAndFindEmiPlugin implements EmiPlugin {
         registry.addStackProvider(StorageWorkbenchScreen.class, new StorageWorkbenchEmiStackProvider());
 
         registry.addExclusionArea(StorageWorkbenchScreen.class, (screen, consumer) -> {
-            if (!screen.isStoragePanelOpen()) {
+            Rect2i area;
+            if (screen.isStoragePanelOpen()) {
+                area = screen.storagePanelArea();
+            } else if (screen.isRecipePanelOpen()) {
+                area = screen.recipePanelArea();
+            } else {
                 return;
             }
-
-            Rect2i area = screen.storagePanelArea();
             consumer.accept(new Bounds(area.getX(), area.getY(), area.getWidth(), area.getHeight()));
         });
 
