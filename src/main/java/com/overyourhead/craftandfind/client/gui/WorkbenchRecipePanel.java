@@ -330,7 +330,16 @@ public final class WorkbenchRecipePanel {
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        return open && searchBox.isFocused() && searchBox.keyPressed(keyCode, scanCode, modifiers);
+        if (!open || !searchBox.isFocused()) {
+            return false;
+        }
+
+        // Always consume keyboard input while the recipe search field is focused.
+        // EditBox handles control keys here, while printable characters arrive via
+        // charTyped(). Returning true prevents keys such as E from reaching the
+        // screen's inventory binding and closing the workbench while typing.
+        searchBox.keyPressed(keyCode, scanCode, modifiers);
+        return true;
     }
 
     public boolean charTyped(char codePoint, int modifiers) {
