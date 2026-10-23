@@ -186,6 +186,10 @@ public final class WorkbenchRecipePanel {
     }
 
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        render(graphics, mouseX, mouseY, partialTick, true);
+    }
+
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick, boolean renderTooltips) {
         if (!open) {
             return;
         }
@@ -213,7 +217,9 @@ public final class WorkbenchRecipePanel {
                     y + 78,
                     0xFFFFFFFF
             );
-            renderFilterTooltip(graphics, mouseX, mouseY);
+            if (renderTooltips) {
+                renderFilterTooltip(graphics, mouseX, mouseY);
+            }
             return;
         }
 
@@ -237,6 +243,10 @@ public final class WorkbenchRecipePanel {
         }
 
         renderPageControls(graphics, mouseX, mouseY);
+
+        if (!renderTooltips) {
+            return;
+        }
 
         RecipeEntry hovered = entryAt(mouseX, mouseY);
         if (hovered != null) {

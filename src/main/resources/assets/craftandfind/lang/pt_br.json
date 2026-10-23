@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "Uma bancada que usa materiais de armazenamentos",
+  "tooltip.craftandfind.storage_workbench.2": "próximos dentro do seu alcance.",
+  "tooltip.craftandfind.storage_workbench.3": "Selecione receitas no livro integrado ou pelo JEI/EMI",
+  "tooltip.craftandfind.storage_workbench.4": "para preencher automaticamente a grade de fabricação.",
+  "tooltip.craftandfind.storage_workbench.5": "Pesquise itens na lista e clique em um deles para",
+  "tooltip.craftandfind.storage_workbench.6": "destacar os contêineres que o armazenam.",
+  "tooltip.craftandfind.storage_workbench.config": "As opções do mod podem ser ajustadas na configuração.",
+  "block.craftandfind.storage_workbench": "Bancada de armazenamento",
+  "item.craftandfind.storage_workbench": "Bancada de armazenamento",
+  "gui.craftandfind.open_storage": "Armazenamento próximo",
+  "gui.craftandfind.open_recipes": "Livro de receitas",
+  "gui.craftandfind.search": "Pesquisar...",
+  "gui.craftandfind.no_items": "Nenhum item por perto",
+  "gui.craftandfind.sort_quantity": "Ordenar por quantidade",
+  "gui.craftandfind.sort_alphabetical": "Ordenar alfabeticamente",
+  "advancements.craftandfind.a_better_workbench.title": "Uma bancada melhor",
+  "advancements.craftandfind.a_better_workbench.description": "Transforme a bancada em algo ainda melhor.",
+  "gui.craftandfind.no_recipes": "Nenhuma receita correspondente",
+  "gui.craftandfind.show_craftable_recipes": "Mostrar receitas fabricáveis",
+  "gui.craftandfind.show_all_recipes": "Mostrar todas as receitas"
+}

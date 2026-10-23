@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "Un établi qui utilise les matériaux des espaces",
+  "tooltip.craftandfind.storage_workbench.2": "de stockage à proximité, dans son rayon d’action.",
+  "tooltip.craftandfind.storage_workbench.3": "Choisissez une recette dans le livre intégré ou via",
+  "tooltip.craftandfind.storage_workbench.4": "JEI/EMI pour remplir automatiquement la grille de fabrication.",
+  "tooltip.craftandfind.storage_workbench.5": "Recherchez un objet dans la liste et cliquez dessus",
+  "tooltip.craftandfind.storage_workbench.6": "pour mettre en évidence les conteneurs qui le stockent.",
+  "tooltip.craftandfind.storage_workbench.config": "Les paramètres du mod sont réglables dans la configuration.",
+  "block.craftandfind.storage_workbench": "Établi de stockage",
+  "item.craftandfind.storage_workbench": "Établi de stockage",
+  "gui.craftandfind.open_storage": "Stockage à proximité",
+  "gui.craftandfind.open_recipes": "Livre de recettes",
+  "gui.craftandfind.search": "Rechercher...",
+  "gui.craftandfind.no_items": "Aucun objet à proximité",
+  "gui.craftandfind.sort_quantity": "Trier par quantité",
+  "gui.craftandfind.sort_alphabetical": "Trier par ordre alphabétique",
+  "advancements.craftandfind.a_better_workbench.title": "Un meilleur établi",
+  "advancements.craftandfind.a_better_workbench.description": "Transformez votre établi en quelque chose de plus grand.",
+  "gui.craftandfind.no_recipes": "Aucune recette correspondante",
+  "gui.craftandfind.show_craftable_recipes": "Afficher les recettes réalisables",
+  "gui.craftandfind.show_all_recipes": "Afficher toutes les recettes"
+}

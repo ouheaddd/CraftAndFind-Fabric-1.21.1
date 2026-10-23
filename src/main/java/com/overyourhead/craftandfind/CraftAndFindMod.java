@@ -6,6 +6,7 @@ import com.overyourhead.craftandfind.common.network.CraftAndFindNetwork;
 import com.overyourhead.craftandfind.config.CraftAndFindServerConfig;
 import com.overyourhead.craftandfind.core.ModBlocks;
 import com.overyourhead.craftandfind.core.ModItems;
+import com.overyourhead.craftandfind.core.ModCreativeTabs;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -19,6 +20,7 @@ public final class CraftAndFindMod implements ModInitializer {
         ModDataAttachments.bootstrap();
         ModBlocks.register();
         ModItems.register();
+        ModCreativeTabs.register();
         CraftAndFindServerConfig.load();
         CraftAndFindNetwork.register();
         CommonEvents.register();

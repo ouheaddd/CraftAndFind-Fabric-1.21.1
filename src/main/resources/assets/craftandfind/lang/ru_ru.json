@@ -11,5 +11,13 @@
   "advancements.craftandfind.a_better_workbench.description": "Превратите обычный верстак во что-то большее.",
   "gui.craftandfind.no_recipes": "Нет подходящих рецептов",
   "gui.craftandfind.show_craftable_recipes": "Показать доступные рецепты",
-  "gui.craftandfind.show_all_recipes": "Показать все рецепты"
+  "gui.craftandfind.show_all_recipes": "Показать все рецепты",
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "Верстак для крафта из ресурсов в ближайших",
+  "tooltip.craftandfind.storage_workbench.2": "хранилищах в радиусе действия.",
+  "tooltip.craftandfind.storage_workbench.3": "Выбирайте рецепты во встроенной книге или через JEI/EMI —",
+  "tooltip.craftandfind.storage_workbench.4": "ингредиенты автоматически переместятся в сетку крафта.",
+  "tooltip.craftandfind.storage_workbench.5": "Ищите предметы в списке и нажимайте на них, чтобы",
+  "tooltip.craftandfind.storage_workbench.6": "подсветить контейнеры, в которых они лежат.",
+  "tooltip.craftandfind.storage_workbench.config": "Параметры мода можно настроить в конфиге."
 }

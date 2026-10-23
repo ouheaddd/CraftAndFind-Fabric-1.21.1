@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "Una mesa de trabajo que usa materiales del",
+  "tooltip.craftandfind.storage_workbench.2": "almacenamiento cercano dentro de su alcance.",
+  "tooltip.craftandfind.storage_workbench.3": "Selecciona recetas en el libro integrado o mediante",
+  "tooltip.craftandfind.storage_workbench.4": "JEI/EMI para llenar automáticamente la cuadrícula de fabricación.",
+  "tooltip.craftandfind.storage_workbench.5": "Busca objetos en la lista y haz clic en uno para",
+  "tooltip.craftandfind.storage_workbench.6": "resaltar los contenedores que lo guardan.",
+  "tooltip.craftandfind.storage_workbench.config": "Puedes ajustar las opciones del mod en la configuración.",
+  "block.craftandfind.storage_workbench": "Mesa de trabajo de almacenamiento",
+  "item.craftandfind.storage_workbench": "Mesa de trabajo de almacenamiento",
+  "gui.craftandfind.open_storage": "Almacenamiento cercano",
+  "gui.craftandfind.open_recipes": "Libro de recetas",
+  "gui.craftandfind.search": "Buscar...",
+  "gui.craftandfind.no_items": "No hay objetos cerca",
+  "gui.craftandfind.sort_quantity": "Ordenar por cantidad",
+  "gui.craftandfind.sort_alphabetical": "Ordenar alfabéticamente",
+  "advancements.craftandfind.a_better_workbench.title": "Una mesa de trabajo mejor",
+  "advancements.craftandfind.a_better_workbench.description": "Convierte tu mesa de trabajo en algo más grande.",
+  "gui.craftandfind.no_recipes": "No hay recetas coincidentes",
+  "gui.craftandfind.show_craftable_recipes": "Mostrar recetas que se pueden fabricar",
+  "gui.craftandfind.show_all_recipes": "Mostrar todas las recetas"
+}

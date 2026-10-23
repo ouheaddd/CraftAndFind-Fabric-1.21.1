@@ -28,6 +28,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class StorageWorkbenchScreen extends CraftingScreen {
+    private static final org.slf4j.Logger LOGGER = com.mojang.logging.LogUtils.getLogger();
+    private static boolean renderingWorkbench;
+    private boolean reportedBasePoseLeak;
+    private boolean reportedOverlayPoseLeak;
     private static boolean rememberedRecipeTabActive;
 
     private StoragePanel storagePanel;
@@ -188,13 +192,39 @@ public final class StorageWorkbenchScreen extends CraftingScreen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        lastMouseX = mouseX;
-        lastMouseY = mouseY;
-        updateCustomPositions();
-        super.render(graphics, mouseX, mouseY, partialTick);
-        renderPreciseGhostPreview(graphics);
-        storagePanel.render(graphics, mouseX, mouseY, partialTick);
-        recipePanel.render(graphics, mouseX, mouseY, partialTick);
+        if (renderingWorkbench) {
+            return;
+        }
+        GuiPoseSnapshot entryPose = new GuiPoseSnapshot(graphics.pose());
+        renderingWorkbench = true;
+        try {
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+            updateCustomPositions();
+            try {
+                super.render(graphics, mouseX, mouseY, partialTick);
+            } finally {
+                if (entryPose.restore(graphics.pose()) && !reportedBasePoseLeak) {
+                    reportedBasePoseLeak = true;
+                    LOGGER.warn("[Craft & Find] Restored leaked GUI pose after base container render (carried={}). Check inventory animation/render integrations.", !menu.getCarried().isEmpty());
+                }
+            }
+            renderPreciseGhostPreview(graphics);
+            // Match AbstractContainerScreen: item tooltips are suppressed while
+            // a stack is carried, including our custom side-panel tooltips.
+            boolean renderTooltips = menu.getCarried().isEmpty();
+            storagePanel.render(graphics, mouseX, mouseY, partialTick, renderTooltips);
+            recipePanel.render(graphics, mouseX, mouseY, partialTick, renderTooltips);
+        } finally {
+            try {
+                if (entryPose.restore(graphics.pose()) && !reportedOverlayPoseLeak) {
+                    reportedOverlayPoseLeak = true;
+                    LOGGER.warn("[Craft & Find] Restored leaked GUI pose after custom overlay render.");
+                }
+            } finally {
+                renderingWorkbench = false;
+            }
+        }
     }
 
     @Override

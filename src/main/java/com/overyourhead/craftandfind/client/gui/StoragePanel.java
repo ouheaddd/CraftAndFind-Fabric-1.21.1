@@ -119,6 +119,10 @@ public final class StoragePanel {
     }
 
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        render(graphics, mouseX, mouseY, partialTick, true);
+    }
+
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick, boolean renderTooltips) {
         if (!open) {
             return;
         }
@@ -146,7 +150,9 @@ public final class StoragePanel {
                     y + 78,
                     0xFFFFFFFF
             );
-            renderSortTooltip(graphics, mouseX, mouseY);
+            if (renderTooltips) {
+                renderSortTooltip(graphics, mouseX, mouseY);
+            }
             return;
         }
 
@@ -171,6 +177,10 @@ public final class StoragePanel {
         }
 
         renderScrollbar(graphics, mouseX, mouseY);
+
+        if (!renderTooltips) {
+            return;
+        }
 
         StorageItemEntry hoveredEntry = entryAt(mouseX, mouseY);
         if (hoveredEntry != null) {

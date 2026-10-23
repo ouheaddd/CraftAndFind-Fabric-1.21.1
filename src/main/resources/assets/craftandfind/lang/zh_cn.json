@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "可使用作用范围内附近储物容器中的",
+  "tooltip.craftandfind.storage_workbench.2": "材料进行合成的工作台。",
+  "tooltip.craftandfind.storage_workbench.3": "在内置配方书或 JEI/EMI 中选择配方，",
+  "tooltip.craftandfind.storage_workbench.4": "即可自动将材料填入合成网格。",
+  "tooltip.craftandfind.storage_workbench.5": "在物品列表中搜索并点击物品，",
+  "tooltip.craftandfind.storage_workbench.6": "即可高亮显示存放该物品的容器。",
+  "tooltip.craftandfind.storage_workbench.config": "可在配置文件中调整模组设置。",
+  "block.craftandfind.storage_workbench": "仓储工作台",
+  "item.craftandfind.storage_workbench": "仓储工作台",
+  "gui.craftandfind.open_storage": "附近储物",
+  "gui.craftandfind.open_recipes": "配方书",
+  "gui.craftandfind.search": "搜索…",
+  "gui.craftandfind.no_items": "附近没有物品",
+  "gui.craftandfind.sort_quantity": "按数量排序",
+  "gui.craftandfind.sort_alphabetical": "按名称排序",
+  "advancements.craftandfind.a_better_workbench.title": "更好的工作台",
+  "advancements.craftandfind.a_better_workbench.description": "将工作台升级为更强大的工具。",
+  "gui.craftandfind.no_recipes": "没有匹配的配方",
+  "gui.craftandfind.show_craftable_recipes": "显示可合成配方",
+  "gui.craftandfind.show_all_recipes": "显示所有配方"
+}

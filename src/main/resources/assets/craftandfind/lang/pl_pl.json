@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "Stół rzemieślniczy korzystający z materiałów",
+  "tooltip.craftandfind.storage_workbench.2": "w pobliskich magazynach w swoim zasięgu.",
+  "tooltip.craftandfind.storage_workbench.3": "Wybierz przepis we wbudowanej książce lub przez JEI/EMI,",
+  "tooltip.craftandfind.storage_workbench.4": "aby automatycznie wypełnić siatkę wytwarzania.",
+  "tooltip.craftandfind.storage_workbench.5": "Wyszukaj przedmiot na liście i kliknij go,",
+  "tooltip.craftandfind.storage_workbench.6": "aby podświetlić pojemniki, w których się znajduje.",
+  "tooltip.craftandfind.storage_workbench.config": "Ustawienia moda można zmienić w pliku konfiguracyjnym.",
+  "block.craftandfind.storage_workbench": "Magazynowy stół rzemieślniczy",
+  "item.craftandfind.storage_workbench": "Magazynowy stół rzemieślniczy",
+  "gui.craftandfind.open_storage": "Pobliskie magazyny",
+  "gui.craftandfind.open_recipes": "Książka receptur",
+  "gui.craftandfind.search": "Szukaj...",
+  "gui.craftandfind.no_items": "Brak przedmiotów w pobliżu",
+  "gui.craftandfind.sort_quantity": "Sortuj według liczby",
+  "gui.craftandfind.sort_alphabetical": "Sortuj alfabetycznie",
+  "advancements.craftandfind.a_better_workbench.title": "Lepszy stół rzemieślniczy",
+  "advancements.craftandfind.a_better_workbench.description": "Ulepsz stół rzemieślniczy do czegoś lepszego.",
+  "gui.craftandfind.no_recipes": "Brak pasujących przepisów",
+  "gui.craftandfind.show_craftable_recipes": "Pokaż możliwe do wykonania przepisy",
+  "gui.craftandfind.show_all_recipes": "Pokaż wszystkie przepisy"
+}

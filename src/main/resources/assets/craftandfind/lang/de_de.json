@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "Eine Werkbank zum Fertigen mit Materialien",
+  "tooltip.craftandfind.storage_workbench.2": "aus Lagern in der näheren Umgebung.",
+  "tooltip.craftandfind.storage_workbench.3": "Wähle Rezepte im integrierten Rezeptbuch oder",
+  "tooltip.craftandfind.storage_workbench.4": "über JEI/EMI, um das Handwerksfeld automatisch zu füllen.",
+  "tooltip.craftandfind.storage_workbench.5": "Suche in der Gegenstandsliste und klicke einen Eintrag an,",
+  "tooltip.craftandfind.storage_workbench.6": "um die Behälter mit diesem Gegenstand hervorzuheben.",
+  "tooltip.craftandfind.storage_workbench.config": "Die Mod-Einstellungen lassen sich in der Konfiguration anpassen.",
+  "block.craftandfind.storage_workbench": "Lagerwerkbank",
+  "item.craftandfind.storage_workbench": "Lagerwerkbank",
+  "gui.craftandfind.open_storage": "Lager in der Nähe",
+  "gui.craftandfind.open_recipes": "Rezeptbuch",
+  "gui.craftandfind.search": "Suchen...",
+  "gui.craftandfind.no_items": "Keine Gegenstände in der Nähe",
+  "gui.craftandfind.sort_quantity": "Nach Anzahl sortieren",
+  "gui.craftandfind.sort_alphabetical": "Alphabetisch sortieren",
+  "advancements.craftandfind.a_better_workbench.title": "Eine bessere Werkbank",
+  "advancements.craftandfind.a_better_workbench.description": "Verbessere die Werkbank zu etwas Größerem.",
+  "gui.craftandfind.no_recipes": "Keine passenden Rezepte",
+  "gui.craftandfind.show_craftable_recipes": "Herstellbare Rezepte anzeigen",
+  "gui.craftandfind.show_all_recipes": "Alle Rezepte anzeigen"
+}

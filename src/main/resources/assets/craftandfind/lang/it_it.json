@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "Un banco da lavoro che usa materiali dai depositi",
+  "tooltip.craftandfind.storage_workbench.2": "vicini entro il suo raggio d’azione.",
+  "tooltip.craftandfind.storage_workbench.3": "Scegli le ricette nel ricettario integrato o tramite",
+  "tooltip.craftandfind.storage_workbench.4": "JEI/EMI per riempire automaticamente la griglia di fabbricazione.",
+  "tooltip.craftandfind.storage_workbench.5": "Cerca un oggetto nell’elenco e fai clic su di esso",
+  "tooltip.craftandfind.storage_workbench.6": "per evidenziare i contenitori che lo contengono.",
+  "tooltip.craftandfind.storage_workbench.config": "Puoi modificare le impostazioni della mod nella configurazione.",
+  "block.craftandfind.storage_workbench": "Banco da lavoro con accesso ai depositi",
+  "item.craftandfind.storage_workbench": "Banco da lavoro con accesso ai depositi",
+  "gui.craftandfind.open_storage": "Depositi vicini",
+  "gui.craftandfind.open_recipes": "Ricettario",
+  "gui.craftandfind.search": "Cerca...",
+  "gui.craftandfind.no_items": "Nessun oggetto nelle vicinanze",
+  "gui.craftandfind.sort_quantity": "Ordina per quantità",
+  "gui.craftandfind.sort_alphabetical": "Ordina alfabeticamente",
+  "advancements.craftandfind.a_better_workbench.title": "Un banco da lavoro migliore",
+  "advancements.craftandfind.a_better_workbench.description": "Trasforma il banco da lavoro in qualcosa di più grande.",
+  "gui.craftandfind.no_recipes": "Nessuna ricetta corrispondente",
+  "gui.craftandfind.show_craftable_recipes": "Mostra le ricette realizzabili",
+  "gui.craftandfind.show_all_recipes": "Mostra tutte le ricette"
+}

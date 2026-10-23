@@ -1,0 +1,23 @@
+{
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "範囲内の近くの収納にある素材を使って",
+  "tooltip.craftandfind.storage_workbench.2": "クラフトできる作業台です。",
+  "tooltip.craftandfind.storage_workbench.3": "内蔵のレシピブックや JEI/EMI でレシピを選ぶと、",
+  "tooltip.craftandfind.storage_workbench.4": "クラフトグリッドに素材が自動で配置されます。",
+  "tooltip.craftandfind.storage_workbench.5": "一覧からアイテムを検索してクリックすると、",
+  "tooltip.craftandfind.storage_workbench.6": "そのアイテムが入っている収納が強調表示されます。",
+  "tooltip.craftandfind.storage_workbench.config": "MOD の設定は設定ファイルで変更できます。",
+  "block.craftandfind.storage_workbench": "収納作業台",
+  "item.craftandfind.storage_workbench": "収納作業台",
+  "gui.craftandfind.open_storage": "近くの収納",
+  "gui.craftandfind.open_recipes": "レシピブック",
+  "gui.craftandfind.search": "検索…",
+  "gui.craftandfind.no_items": "近くにアイテムがありません",
+  "gui.craftandfind.sort_quantity": "個数順に並べ替え",
+  "gui.craftandfind.sort_alphabetical": "名前順に並べ替え",
+  "advancements.craftandfind.a_better_workbench.title": "より良い作業台",
+  "advancements.craftandfind.a_better_workbench.description": "作業台をさらに便利なものにアップグレードする。",
+  "gui.craftandfind.no_recipes": "一致するレシピがありません",
+  "gui.craftandfind.show_craftable_recipes": "クラフト可能なレシピを表示",
+  "gui.craftandfind.show_all_recipes": "すべてのレシピを表示"
+}

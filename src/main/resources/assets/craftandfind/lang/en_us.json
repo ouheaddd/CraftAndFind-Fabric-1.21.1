@@ -11,5 +11,13 @@
   "advancements.craftandfind.a_better_workbench.description": "Upgrade the crafting table into something greater.",
   "gui.craftandfind.no_recipes": "No matching recipes",
   "gui.craftandfind.show_craftable_recipes": "Show craftable recipes",
-  "gui.craftandfind.show_all_recipes": "Show all recipes"
+  "gui.craftandfind.show_all_recipes": "Show all recipes",
+  "itemGroup.craftandfind": "Craft & Find",
+  "tooltip.craftandfind.storage_workbench.1": "A workbench that crafts using materials",
+  "tooltip.craftandfind.storage_workbench.2": "from nearby storage within range.",
+  "tooltip.craftandfind.storage_workbench.3": "Select recipes in the built-in recipe book or",
+  "tooltip.craftandfind.storage_workbench.4": "through JEI/EMI to automatically fill the crafting grid.",
+  "tooltip.craftandfind.storage_workbench.5": "Search the item list and click an item to",
+  "tooltip.craftandfind.storage_workbench.6": "highlight the containers holding it.",
+  "tooltip.craftandfind.storage_workbench.config": "Mod settings can be adjusted in the config."
 }
