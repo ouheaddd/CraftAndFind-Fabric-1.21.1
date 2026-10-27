@@ -25,8 +25,17 @@ public final class CraftAndFindMod implements ModInitializer {
         CraftAndFindNetwork.register();
         CommonEvents.register();
 
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(entries ->
-                entries.addAfter(Blocks.ENCHANTING_TABLE, ModItems.STORAGE_WORKBENCH_ITEM)
-        );
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(entries -> {
+            // Keep the usual position when the anchor is available in both lists.
+            boolean hasDisplayAnchor = entries.getDisplayStacks().stream()
+                    .anyMatch(stack -> stack.is(Blocks.ENCHANTING_TABLE.asItem()));
+            boolean hasSearchAnchor = entries.getSearchTabStacks().stream()
+                    .anyMatch(stack -> stack.is(Blocks.ENCHANTING_TABLE.asItem()));
+            if (hasDisplayAnchor && hasSearchAnchor) {
+                entries.addAfter(Blocks.ENCHANTING_TABLE, ModItems.STORAGE_WORKBENCH_ITEM);
+            } else {
+                entries.accept(ModItems.STORAGE_WORKBENCH_ITEM);
+            }
+        });
     }
 }
